@@ -23,12 +23,15 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
     // Source: https://mvnrepository.com/artifact/com.github.ben-manes/gradle-versions-plugin
     runtimeOnly("com.github.ben-manes:gradle-versions-plugin:0.11.1")
     // Source: https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
     implementation("org.apache.commons:commons-lang3:3.20.0")
     // Source: https://mvnrepository.com/artifact/info.picocli/picocli
     implementation("info.picocli:picocli:4.7.7")
+
+    implementation("tools.jackson.core:jackson-databind:3.2.0")
 }
 
 tasks.test {

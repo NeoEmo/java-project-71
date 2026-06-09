@@ -2,7 +2,7 @@ run-dist:
 	./build/install/app/bin/app
 
 win-run-dist:
-	.\build\install\app\bin\app
+	.\build\install\app\bin\app $(ARGS)
 
 help:
 	./build/install/app/bin/app -h
