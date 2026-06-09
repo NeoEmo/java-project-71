@@ -61,6 +61,12 @@ public class App implements Runnable {
             }
         }
 
-        throw new FileNotFoundException("Файл " + fileName + " не найден в следующих местах: " + allPossiblePaths);
+        StringBuilder allPaths = new StringBuilder();
+        allPaths.append("\n");
+        for (Path path : allPossiblePaths) {
+            allPaths.append(path).append("\n");
+        }
+
+        throw new FileNotFoundException("Файл " + fileName + " не найден в следующих местах: " + allPaths.toString());
     }
 }
