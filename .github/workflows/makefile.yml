@@ -42,6 +42,6 @@ jobs:
           fi
       - name: Run with valid arguments
         run: make run-dist ARGS="src/main/resources/file1.json src/main/resources/file2.json"
-        
+
       - name: Run help
         run: make help
