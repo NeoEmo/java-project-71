@@ -4,10 +4,6 @@
 
 
 
-
-
-
-
 Asciinema Differ — https://asciinema.org/a/jz0P0o4dR4RicT93
 
 Дополнительная Asciinema Differ(Забыл в первой показать что будет, если нет такого файла)
