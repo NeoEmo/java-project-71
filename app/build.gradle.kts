@@ -1,6 +1,7 @@
 plugins {
     id("checkstyle")
     id("application")
+    id("org.sonarqube") version "7.3.1.8318"
 }
 
 group = "hexlet.code"
@@ -44,4 +45,11 @@ checkstyle {
 
 tasks.getByName("run", JavaExec::class) {
     standardInput = System.`in`
+}
+
+sonar {
+    properties {
+        property("sonar.projectKey", "NeoEmo_java-project-71")
+        property("sonar.organization", "neoemo")
+    }
 }
