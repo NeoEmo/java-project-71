@@ -14,8 +14,10 @@ jobs:
 
       - uses: actions/checkout@v6
 
-      - name: Print Hello from hexlet
-        uses: hexlet-components/hello-from-hexlet-action@release
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: 'npm'
 
       - run: make run-dist
       - run: make help
