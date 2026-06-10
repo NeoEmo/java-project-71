@@ -1,0 +1,16 @@
+name: makefile
+
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v6
+
+      - name: Print Hello from hexlet
+        uses: hexlet-components/hello-from-hexlet-action@release
+
+      - run: make run-dist
+      - run: make help
+      - run: make build
