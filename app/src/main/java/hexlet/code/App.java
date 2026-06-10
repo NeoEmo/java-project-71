@@ -47,7 +47,7 @@ public class App implements Runnable {
         }
     }
 
-    private String readFile(String fileName) throws Exception {
+    protected String readFile(String fileName) throws Exception {
         List<Path> allPossiblePaths = Arrays.asList(
                 Paths.get(fileName),
                 Paths.get("").toAbsolutePath().resolve(fileName),
