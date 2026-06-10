@@ -2,6 +2,7 @@ plugins {
     id("checkstyle")
     id("application")
     id("org.sonarqube") version "7.3.1.8318"
+    id("jacoco")
 }
 
 group = "hexlet.code"
@@ -52,5 +53,12 @@ sonar {
         property("sonar.host.url", "https://sonarcloud.io")
         property("sonar.projectKey", "NeoEmo_java-project-71")
         property("sonar.organization", "neoemo")
+    }
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        xml.required = true
     }
 }
