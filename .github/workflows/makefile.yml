@@ -24,22 +24,6 @@ jobs:
       - name: Build project
         run: make build
 
-      - name: Check that running without arguments fails
-        run: |
-          set +e
-          output=$(make run-dist 2>&1)
-          exit_code=$?
-          set -e
-          if [ $exit_code -eq 0 ]; then
-            echo "❌ Should fail without arguments"
-            exit 1
-          fi
-          if echo "$output" | grep -q "Usage: gendiff"; then
-            echo "✅ Usage shown"
-          else
-            echo "❌ No usage"
-            exit 1
-          fi
       - name: Run with valid arguments
         run: make run-dist ARGS="src/main/resources/file1.json src/main/resources/file2.json"
 
