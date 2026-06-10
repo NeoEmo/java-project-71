@@ -49,6 +49,7 @@ tasks.getByName("run", JavaExec::class) {
 
 sonar {
     properties {
+        property("sonar.host.url", "https://sonarcloud.io")
         property("sonar.projectKey", "NeoEmo_java-project-71")
         property("sonar.organization", "neoemo")
     }
