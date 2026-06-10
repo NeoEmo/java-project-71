@@ -53,6 +53,7 @@ sonar {
         property("sonar.host.url", "https://sonarcloud.io")
         property("sonar.projectKey", "NeoEmo_java-project-71")
         property("sonar.organization", "neoemo")
+        property("sonar.coverage.jacoco.xmlReportPaths", "${layout.buildDirectory.get()}/reports/jacoco/test/jacocoTestReport.xml")
     }
 }
 
