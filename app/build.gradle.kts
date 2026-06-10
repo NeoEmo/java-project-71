@@ -33,8 +33,7 @@ dependencies {
     // Source: https://mvnrepository.com/artifact/info.picocli/picocli
     implementation("info.picocli:picocli:4.7.7")
 
-    implementation("tools.jackson.core:jackson-databind:3.2.0")
-}
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")}
 
 tasks.test {
     useJUnitPlatform()

@@ -1,15 +1,19 @@
+.PHONY: run-dist win-run-dist help win-help build
+
 run-dist:
 	./build/install/app/bin/app $(ARGS)
-	.PHONY: build
 
 win-run-dist:
 	.\build\install\app\bin\app $(ARGS)
-	.PHONY: build
 
 help:
 	./build/install/app/bin/app -h
-	.PHONY: build
 
 win-help:
 	.\build\install\app\bin\app -h
-	.PHONY: build
+
+build:
+	./gradlew build
+
+win-build:
+	.\gradlew build
