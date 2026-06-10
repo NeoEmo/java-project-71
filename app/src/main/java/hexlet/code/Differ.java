@@ -54,6 +54,7 @@ public class Differ {
             result.append(line).append("\n");
         }
         result.append("}");
+        System.out.println("a");
         return result.toString();
     }
 }
