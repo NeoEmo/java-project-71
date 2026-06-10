@@ -8,7 +8,7 @@ on:
 
 defaults:
   run:
-    working-directory: app   # <-- вот это решает проблему
+    working-directory: app
 
 jobs:
   build:
