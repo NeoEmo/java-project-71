@@ -10,7 +10,7 @@ public class Parser {
     protected static Map<String, Object> parse(String filePath, String extension) throws Exception {
         ObjectMapper mapper = switch (extension) {
             case "json" -> new ObjectMapper();
-            case "yaml" -> new ObjectMapper(new YAMLFactory());
+            case "yaml", "yml" -> new ObjectMapper(new YAMLFactory());
             default -> throw new Exception("Неподдерживаемое расширение файла");
         };
         return mapper.readValue(filePath, Map.class);

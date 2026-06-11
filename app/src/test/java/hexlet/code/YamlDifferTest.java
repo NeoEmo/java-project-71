@@ -25,6 +25,7 @@ public class YamlDifferTest {
                   + verbose: true
                 }""";
         assertEquals(result, Differ.generate("file1.yaml", "file2.yaml", format));
+        assertEquals(result, Differ.generate("file1.yml", "file2.yml", format));
     }
 
     @Test
