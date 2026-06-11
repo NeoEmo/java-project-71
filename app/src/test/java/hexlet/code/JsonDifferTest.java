@@ -28,7 +28,7 @@ public class JsonDifferTest {
     }
 
     @Test
-    public void testDiffer2() throws Exception {
+    public void testDiffer2() {
         var format = "stylish";
         Exception exception = assertThrows(FileNotFoundException.class, () -> {
             Differ.generate("file1.json", "file3.json", format);

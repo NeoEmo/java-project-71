@@ -6,7 +6,9 @@ import java.io.FileNotFoundException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class YamlDifferTest {
 
@@ -26,7 +28,7 @@ public class YamlDifferTest {
     }
 
     @Test
-    public void testDiffer2() throws Exception {
+    public void testDiffer2() {
         var format = "stylish";
         Exception exception = assertThrows(FileNotFoundException.class, () -> {
             Differ.generate("file1.yaml", "file3.yaml", format);

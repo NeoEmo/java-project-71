@@ -23,8 +23,8 @@ public class App implements Runnable {
     private String format = "stylish";
 
     public static void main(String[] args) {
-        int exitcode = new CommandLine(new App()).execute(args);
-        System.exit(exitcode);
+        int exitCode = new CommandLine(new App()).execute(args);
+        System.exit(exitCode);
     }
 
     @Override
