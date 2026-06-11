@@ -3,18 +3,17 @@ package hexlet.code;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class DifferTest {
+public class JsonDifferTest {
 
     @Test
     public void testDiffer() throws Exception {
-        App app = new App();
-        var file1 = app.readFile("file1.json");
-        var file2 = app.readFile("file2.json");
         var format = "stylish";
         var result = """
                 {
@@ -25,14 +24,14 @@ public class DifferTest {
                   + timeout: 20
                   + verbose: true
                 }""";
-        assertEquals(result, Differ.generate(file1, file2, format));
+        assertEquals(result, Differ.generate("file1.json", "file2.json", format));
     }
 
     @Test
     public void testDiffer2() throws Exception {
-        App app = new App();
+        var format = "stylish";
         Exception exception = assertThrows(FileNotFoundException.class, () -> {
-            app.readFile("file3.json");
+            Differ.generate("file1.json", "file3.json", format);
         });
         String expectedStart = "Файл file3.json не найден в следующих местах:";
         assertTrue(exception.getMessage().startsWith(expectedStart));
@@ -55,7 +54,6 @@ public class DifferTest {
             "d":2,
             "e":6
             }""";
-        var format = "stylish";
         var result = """
             {
               - a: 1
@@ -67,6 +65,17 @@ public class DifferTest {
               - e: 5
               + e: 6
             }""";
-        assertEquals(result, Differ.generate(json1, json2, format));
+
+        Path tempFile1 = Files.createTempFile("test1", ".json");
+        Path tempFile2 = Files.createTempFile("test2", ".json");
+        try {
+            Files.writeString(tempFile1, json1);
+            Files.writeString(tempFile2, json2);
+            String diff = Differ.generate(tempFile1.toString(), tempFile2.toString(), "stylish");
+            assertEquals(result, diff);
+        } finally {
+            Files.deleteIfExists(tempFile1);
+            Files.deleteIfExists(tempFile2);
+        }
     }
 }

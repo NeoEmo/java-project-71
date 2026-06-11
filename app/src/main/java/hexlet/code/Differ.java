@@ -1,19 +1,20 @@
 package hexlet.code;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import java.util.TreeSet;
+import java.io.FileNotFoundException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 public class Differ {
-    public static String generate(String contentFile1, String contentFile2, String format) throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> map1 = mapper.readValue(contentFile1, Map.class);
-        Map<String, Object> map2 = mapper.readValue(contentFile2, Map.class);
+    public static String generate(String filePath1, String filePath2, String format) throws Exception {
+        String content1 = readFile(filePath1);
+        String content2 = readFile(filePath2);
+        String[] splitExt1 = filePath1.split("\\.");
+        String[] splitExt2 = filePath2.split("\\.");
+
+        Map<String, Object> map1 = Parser.parse(content1, splitExt1[1]);
+        Map<String, Object> map2 = Parser.parse(content2, splitExt2[1]);
 
         Set<String> keys = new TreeSet<>();
         keys.addAll(map1.keySet());
@@ -55,5 +56,27 @@ public class Differ {
         }
         result.append("}");
         return result.toString();
+    }
+
+    protected static String readFile(String fileName) throws Exception {
+        List<Path> allPossiblePaths = Arrays.asList(
+                Paths.get(fileName),
+                Paths.get("").toAbsolutePath().resolve(fileName),
+                Paths.get("src/main/resources").resolve(fileName));
+
+        for (Path path : allPossiblePaths) {
+            Path absolutePath = path.toAbsolutePath().normalize();
+            if (Files.exists(absolutePath)) {
+                return Files.readString(absolutePath).trim();
+            }
+        }
+
+        StringBuilder allPaths = new StringBuilder();
+        allPaths.append("\n");
+        for (Path path : allPossiblePaths) {
+            allPaths.append(path).append("\n");
+        }
+
+        throw new FileNotFoundException("Файл " + fileName + " не найден в следующих местах: " + allPaths.toString());
     }
 }
