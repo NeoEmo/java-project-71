@@ -67,14 +67,23 @@ public class YamlDifferTest {
 
         Path tempFile1 = Files.createTempFile("test1", ".yaml");
         Path tempFile2 = Files.createTempFile("test2", ".yaml");
+        Path tempFile3 = Files.createTempFile("test3", ".yml");
+        Path tempFile4 = Files.createTempFile("test4", ".yml");
         try {
             Files.writeString(tempFile1, yaml1);
             Files.writeString(tempFile2, yaml2);
+            Files.writeString(tempFile3, yaml1);
+            Files.writeString(tempFile4, yaml2);
+
             String diff = Differ.generate(tempFile1.toString(), tempFile2.toString(), "stylish");
+            String diff2 = Differ.generate(tempFile3.toString(), tempFile4.toString(), "stylish");
             assertEquals(result, diff);
+            assertEquals(result, diff2);
         } finally {
             Files.deleteIfExists(tempFile1);
             Files.deleteIfExists(tempFile2);
+            Files.deleteIfExists(tempFile3);
+            Files.deleteIfExists(tempFile4);
         }
     }
 }
