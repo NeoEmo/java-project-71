@@ -31,9 +31,9 @@ public class JsonDifferTest {
     public void testDiffer2() {
         var format = "stylish";
         Exception exception = assertThrows(FileNotFoundException.class, () -> {
-            Differ.generate("file1.json", "file3.json", format);
+            Differ.generate("file1.json", "file10.json", format);
         });
-        String expectedStart = "Файл file3.json не найден в следующих местах:";
+        String expectedStart = "Файл file10.json не найден в следующих местах:";
         assertTrue(exception.getMessage().startsWith(expectedStart));
     }
 
@@ -77,5 +77,37 @@ public class JsonDifferTest {
             Files.deleteIfExists(tempFile1);
             Files.deleteIfExists(tempFile2);
         }
+    }
+
+    @Test
+    public void testDiffer4() throws Exception {
+        var format = "stylish";
+        var result = """
+                {
+                    chars1: [a, b, c]
+                  - chars2: [d, e, f]
+                  + chars2: false
+                  - checked: false
+                  + checked: true
+                  - default: null
+                  + default: [value1, value2]
+                  - id: 45
+                  + id: null
+                  - key1: value1
+                  + key2: value2
+                    numbers1: [1, 2, 3, 4]
+                  - numbers2: [2, 3, 4, 5]
+                  + numbers2: [22, 33, 44, 55]
+                  - numbers3: [3, 4, 5]
+                  + numbers4: [4, 5, 6]
+                  + obj1: {nestedKey=value, isNested=true}
+                  - setting1: Some value
+                  + setting1: Another value
+                  - setting2: 200
+                  + setting2: 300
+                  - setting3: true
+                  + setting3: none
+                }""";
+        assertEquals(result, Differ.generate("file3.json", "file4.json", format));
     }
 }

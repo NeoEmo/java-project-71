@@ -32,9 +32,9 @@ public class YamlDifferTest {
     public void testDiffer2() {
         var format = "stylish";
         Exception exception = assertThrows(FileNotFoundException.class, () -> {
-            Differ.generate("file1.yaml", "file3.yaml", format);
+            Differ.generate("file1.yaml", "file10.yaml", format);
         });
-        String expectedStart = "Файл file3.yaml не найден в следующих местах:";
+        String expectedStart = "Файл file10.yaml не найден в следующих местах:";
         assertTrue(exception.getMessage().startsWith(expectedStart));
     }
 
