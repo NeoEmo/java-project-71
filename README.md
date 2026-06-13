@@ -13,4 +13,6 @@ Asciinema Differ — https://asciinema.org/a/jz0P0o4dR4RicT93
 Дополнительная Asciinema Differ(Забыл в первой показать что будет, если нет такого файла)
 — https://asciinema.org/a/Hza4wGUtsNc44TUK
 
-Asciinema Differ .yaml/.yml — https://asciinema.org/a/HV6Lu6bMrk8CJqu4
+Asciinema Differ, работа с .yaml/.yml — https://asciinema.org/a/HV6Lu6bMrk8CJqu4
+
+Asciinema Differ, Formatter.java — https://asciinema.org/a/JvcgxycLV1hwaGB3
