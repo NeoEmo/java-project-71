@@ -10,7 +10,7 @@ import java.util.TreeSet;
 public class Formatter {
     private record DiffFormat(String key, String type, Object oldValue, Object newValue) { }
 
-    private static List<DiffFormat> formatRecord(Map<String, Object> map1, Map<String, Object> map2) {
+    private static List<DiffFormat> formatDifference(Map<String, Object> map1, Map<String, Object> map2) {
         Set<String> keys = new TreeSet<>();
         keys.addAll(map1.keySet());
         keys.addAll(map2.keySet());
@@ -55,7 +55,7 @@ public class Formatter {
     }
 
     private static String stylish(Map<String, Object> map1, Map<String, Object> map2) throws Exception {
-        List<DiffFormat> diffLines = formatRecord(map1, map2);
+        List<DiffFormat> diffLines = formatDifference(map1, map2);
         List<String> lines = new ArrayList<>();
         for (DiffFormat format : diffLines) {
             switch (format.type) {
@@ -74,7 +74,7 @@ public class Formatter {
     }
 
     private static String plain(Map<String, Object> map1, Map<String, Object> map2) throws Exception {
-        List<DiffFormat> diffLines = formatRecord(map1, map2);
+        List<DiffFormat> diffLines = formatDifference(map1, map2);
         List<String> lines = new ArrayList<>();
         for (DiffFormat format : diffLines) {
             switch (format.type) {
@@ -97,6 +97,8 @@ public class Formatter {
         return result + "\n";
     }
 
+
+    // не актуально, не факт что будет
     private static String json(Map<String, Object> map1, Map<String, Object> map2) {
         return null;
     }
