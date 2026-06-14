@@ -16,3 +16,7 @@ Asciinema Differ — https://asciinema.org/a/jz0P0o4dR4RicT93
 Asciinema Differ, работа с .yaml/.yml — https://asciinema.org/a/HV6Lu6bMrk8CJqu4
 
 Asciinema Differ, Formatter.java — https://asciinema.org/a/JvcgxycLV1hwaGB3
+
+Asciinema Differ, new Formatter.java — https://asciinema.org/a/NSwiRsFXcgNoOFxk
+
+###Немного пояснений про мои #lol, я ранее получал другой вывод и забыл что в plain я исправил вывод и теперь любые не изменнённые строчки не будут попадать в diff, поэтому они на самом деле отработали корреектно
