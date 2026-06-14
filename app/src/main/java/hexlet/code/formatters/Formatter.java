@@ -1,4 +1,4 @@
-package hexlet.code;
+package hexlet.code.formatters;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,9 +36,23 @@ public class Formatter {
             } else {
                 type = CHANGED;
             }
+
             diffLines.add(new DiffFormat(key, type, value1, value2));
         }
         return diffLines;
+    }
+
+    private static String formatValue(Object value) {
+        if (value == null) {
+            return "null";
+        }
+        if (value instanceof Map || value instanceof List) {
+            return "[complex value]";
+        }
+        if (value instanceof String) {
+            return "'" + value + "'";
+        }
+        return value.toString();
     }
 
     public static String format(Map<String, Object> map1, Map<String, Object> map2, String format) throws Exception {
@@ -85,17 +99,18 @@ public class Formatter {
             switch (format.type) {
                 case REMOVED -> lines.add(property + format.key + "' was removed");
 
-                case ADDED -> lines.add(property + format.key + "' was added with value: '"
-                        + format.newValue + "'");
+                case ADDED -> lines.add(property + format.key + "' was added with value: "
+                        + formatValue(format.newValue));
 
-                case UNCHANGED -> lines.add(property + format.key + "' was unchanged. Value '"
-                        + format.oldValue + "'");
+                case UNCHANGED -> {
+                    continue;
+                }
 
-                case CHANGED -> lines.add(property + format.key + "' was updated. From '" + format.oldValue
-                        + "' to '" + format.newValue + "'");
+                case CHANGED -> lines.add(property + format.key + "' was updated. From " + formatValue(format.oldValue)
+                        + " to " + formatValue(format.newValue));
 
                 default -> throw new Exception("Невозможно сравнить строчку! " + format.type + ": " + format.key + " "
-                        + format.oldValue);
+                        + formatValue(format.oldValue));
             }
         }
         String result = String.join("\n", lines);
