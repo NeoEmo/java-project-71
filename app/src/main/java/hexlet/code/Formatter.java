@@ -9,6 +9,10 @@ import java.util.TreeSet;
 
 public class Formatter {
     private record DiffFormat(String key, String type, Object oldValue, Object newValue) { }
+    private static final String REMOVED = "removed";
+    private static final String ADDED = "added";
+    private static final String CHANGED = "changed";
+    private static final String UNCHANGED = "unchanged";
 
     private static List<DiffFormat> formatDifference(Map<String, Object> map1, Map<String, Object> map2) {
         Set<String> keys = new TreeSet<>();
@@ -24,13 +28,13 @@ public class Formatter {
 
             String type;
             if (inFirst && !inSecond) {
-                type = "removed";
+                type = REMOVED;
             } else if (!inFirst && inSecond) {
-                type = "added";
+                type = ADDED;
             } else if (Objects.equals(value1, value2)) {
-                type = "unchanged";
+                type = UNCHANGED;
             } else {
-                type = "changed";
+                type = CHANGED;
             }
             diffLines.add(new DiffFormat(key, type, value1, value2));
         }
@@ -59,10 +63,10 @@ public class Formatter {
         List<String> lines = new ArrayList<>();
         for (DiffFormat format : diffLines) {
             switch (format.type) {
-                case "removed" -> lines.add("  - " + format.key + ": " + format.oldValue);
-                case "added" -> lines.add("  + " + format.key + ": " + format.newValue);
-                case "unchanged" -> lines.add("    " + format.key + ": " + format.oldValue);
-                case "changed" -> {
+                case REMOVED -> lines.add("  - " + format.key + ": " + format.oldValue);
+                case ADDED -> lines.add("  + " + format.key + ": " + format.newValue);
+                case UNCHANGED -> lines.add("    " + format.key + ": " + format.oldValue);
+                case CHANGED -> {
                     lines.add("  - " + format.key + ": " + format.oldValue);
                     lines.add("  + " + format.key + ": " + format.newValue);
                 }
@@ -74,19 +78,20 @@ public class Formatter {
     }
 
     private static String plain(Map<String, Object> map1, Map<String, Object> map2) throws Exception {
+        String property = "Property '";
         List<DiffFormat> diffLines = formatDifference(map1, map2);
         List<String> lines = new ArrayList<>();
         for (DiffFormat format : diffLines) {
             switch (format.type) {
-                case "removed" -> lines.add("Property '" + format.key + "' was removed");
+                case REMOVED -> lines.add(property + format.key + "' was removed");
 
-                case "added" -> lines.add("Property '" + format.key + "' was added with value: '"
+                case ADDED -> lines.add(property + format.key + "' was added with value: '"
                         + format.newValue + "'");
 
-                case "unchanged" -> lines.add("Property '" + format.key + "' was unchanged. Value '"
+                case UNCHANGED -> lines.add(property + format.key + "' was unchanged. Value '"
                         + format.oldValue + "'");
 
-                case "changed" -> lines.add("Property '" + format.key + "' was updated. From '" + format.oldValue
+                case CHANGED -> lines.add(property + format.key + "' was updated. From '" + format.oldValue
                         + "' to '" + format.newValue + "'");
 
                 default -> throw new Exception("Невозможно сравнить строчку! " + format.type + ": " + format.key + " "
