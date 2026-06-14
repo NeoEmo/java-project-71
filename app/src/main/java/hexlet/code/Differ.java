@@ -1,6 +1,8 @@
 package hexlet.code;
 
 import hexlet.code.formatters.Formatter;
+import hexlet.code.formatters.Plain;
+import hexlet.code.formatters.Stylish;
 
 import java.io.FileNotFoundException;
 import java.nio.file.Files;
@@ -20,7 +22,13 @@ public class Differ {
         Map<String, Object> map1 = Parser.parse(content1, splitExt1[1]);
         Map<String, Object> map2 = Parser.parse(content2, splitExt2[1]);
 
-        return Formatter.format(map1, map2, format);
+        Formatter formatter = switch (format) {
+            case "stylish" -> new Stylish();
+            case "plain" -> new Plain();
+            default -> throw new Exception("Неподдерживаемый формат " + format);
+        };
+
+        return formatter.format(map1, map2);
     }
 
     protected static String readFile(String fileName) throws Exception {
