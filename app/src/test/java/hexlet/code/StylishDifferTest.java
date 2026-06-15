@@ -25,6 +25,7 @@ public class StylishDifferTest {
                   + verbose: true
                 }""";
         assertEquals(result, Differ.generate("file1.json", "file2.json", format));
+        assertEquals(result, Differ.generate("file1.json", "file2.json"));
     }
 
     @Test

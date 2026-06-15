@@ -33,6 +33,10 @@ public class Differ {
         return formatter.format(map1, map2);
     }
 
+    public static String generate(String filePath1, String filePath2) throws Exception {
+        return generate(filePath1, filePath2, "stylish");
+    }
+
     protected static String readFile(String fileName) throws Exception {
         List<Path> allPossiblePaths = Arrays.asList(
                 Paths.get(fileName),
