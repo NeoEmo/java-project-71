@@ -29,8 +29,7 @@ public class Plain implements Formatter {
                         + format.type() + ": " + format.key() + " " + formatValue(format.oldValue()));
             }
         }
-        String result = String.join("\n", lines);
-        return result + "\n";
+        return String.join("\n", lines);
     }
 
     private static String formatValue(Object value) {

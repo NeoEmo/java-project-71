@@ -13,8 +13,7 @@ public class PlainDifferTest {
                 Property 'follow' was removed
                 Property 'proxy' was removed
                 Property 'timeout' was updated. From 50 to 20
-                Property 'verbose' was added with value: true
-                """;
+                Property 'verbose' was added with value: true""";
 
         assertEquals(result, Differ.generate("file1.json", "file2.json", format));
     }
@@ -35,8 +34,7 @@ public class PlainDifferTest {
                 Property 'obj1' was added with value: [complex value]
                 Property 'setting1' was updated. From 'Some value' to 'Another value'
                 Property 'setting2' was updated. From 200 to 300
-                Property 'setting3' was updated. From true to 'none'
-                """;
+                Property 'setting3' was updated. From true to 'none'""";
 
         assertEquals(result, Differ.generate("file3.json", "file4.json", format));
     }
