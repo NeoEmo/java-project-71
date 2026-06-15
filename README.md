@@ -22,3 +22,5 @@ Asciinema Differ, Plain.java — https://asciinema.org/a/NSwiRsFXcgNoOFxk
 ###Немного пояснений про мои #lol, я ранее получал другой вывод и забыл что в plain я исправил вывод и теперь любые не изменнённые строчки не будут попадать в diff, поэтому они на самом деле отработали корректно
 
 Asciinema Differ, Json.java — https://asciinema.org/a/zoGRBw5F1qEQ2Dfu
+
+Asciinema Differ, обновлённый Json.java — https://asciinema.org/a/R8cVE4kgqB2xCM7k
