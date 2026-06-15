@@ -41,7 +41,7 @@ public class Json implements Formatter {
     }
 
     private static String formatKey(String key) {
-        return "\"" + key + "\": " ;
+        return "\"" + key + "\": ";
     }
 
     @Override
