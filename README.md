@@ -17,6 +17,8 @@ Asciinema Differ, работа с .yaml/.yml — https://asciinema.org/a/HV6Lu6b
 
 Asciinema Differ, Formatter.java — https://asciinema.org/a/JvcgxycLV1hwaGB3
 
-Asciinema Differ, new Formatter.java — https://asciinema.org/a/NSwiRsFXcgNoOFxk
+Asciinema Differ, Plain.java — https://asciinema.org/a/NSwiRsFXcgNoOFxk
 
-###Немного пояснений про мои #lol, я ранее получал другой вывод и забыл что в plain я исправил вывод и теперь любые не изменнённые строчки не будут попадать в diff, поэтому они на самом деле отработали корреектно
+###Немного пояснений про мои #lol, я ранее получал другой вывод и забыл что в plain я исправил вывод и теперь любые не изменнённые строчки не будут попадать в diff, поэтому они на самом деле отработали корректно
+
+Asciinema Differ, Json.java — https://asciinema.org/a/zoGRBw5F1qEQ2Dfu
