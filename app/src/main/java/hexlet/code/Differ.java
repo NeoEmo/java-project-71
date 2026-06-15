@@ -41,7 +41,8 @@ public class Differ {
         List<Path> allPossiblePaths = Arrays.asList(
                 Paths.get(fileName),
                 Paths.get("").toAbsolutePath().resolve(fileName),
-                Paths.get("src/main/resources").resolve(fileName));
+                Paths.get("src/main/resources").resolve(fileName),
+                Paths.get("src/main/resources/fixtures").resolve(fileName));
 
         for (Path path : allPossiblePaths) {
             Path absolutePath = path.toAbsolutePath().normalize();
