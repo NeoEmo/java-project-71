@@ -1,6 +1,7 @@
 package hexlet.code;
 
 import hexlet.code.formatters.Formatter;
+import hexlet.code.formatters.Json;
 import hexlet.code.formatters.Plain;
 import hexlet.code.formatters.Stylish;
 
@@ -25,6 +26,7 @@ public class Differ {
         Formatter formatter = switch (format) {
             case "stylish" -> new Stylish();
             case "plain" -> new Plain();
+            case "json" -> new Json();
             default -> throw new Exception("Неподдерживаемый формат " + format);
         };
 
