@@ -13,16 +13,12 @@ public class Json implements Formatter {
         Map<String, Object> result = new LinkedHashMap<>();
         for (DiffFormat format : diffLines) {
             switch (format.type()) {
-                case REMOVED -> {
+                case REMOVED, UNCHANGED -> {
                     result.put(format.key(), format.oldValue());
                     break;
                 }
                 case ADDED -> {
                     result.put(format.key(), format.newValue());
-                    break;
-                }
-                case UNCHANGED -> {
-                    result.put(format.key(), format.oldValue());
                     break;
                 }
                 case CHANGED -> {
