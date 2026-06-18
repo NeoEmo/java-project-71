@@ -22,7 +22,7 @@ public class App implements Runnable {
     @Option(names = {"-f", "--format"}, description = "Output format (default: stylish)")
     private String format = "stylish";
 
-    static void main(String[] args) {
+    public static void main(String[] args) {
         int exitCode = new CommandLine(new App()).execute(args);
         System.exit(exitCode);
     }
