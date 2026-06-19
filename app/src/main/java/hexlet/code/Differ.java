@@ -1,10 +1,5 @@
 package hexlet.code;
 
-import hexlet.code.formatters.Formatter;
-import hexlet.code.formatters.Json;
-import hexlet.code.formatters.Plain;
-import hexlet.code.formatters.Stylish;
-
 import static hexlet.code.DiffBuilder.DiffFormat;
 
 import java.io.FileNotFoundException;
@@ -24,16 +19,8 @@ public class Differ {
 
         Map<String, Object> map1 = Parser.parse(content1, splitExt1[1]);
         Map<String, Object> map2 = Parser.parse(content2, splitExt2[1]);
-
         List<DiffFormat> diffLines = DiffBuilder.formatDifference(map1, map2);
-        Formatter formatter = switch (format) {
-            case "stylish" -> new Stylish();
-            case "plain" -> new Plain();
-            case "json" -> new Json();
-            default -> throw new Exception("Неподдерживаемый формат " + format);
-        };
-
-        return formatter.format(diffLines);
+        return ChooseFormatter.chooseFormat(format, diffLines);
     }
 
     public static String generate(String filePath1, String filePath2) throws Exception {
