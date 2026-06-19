@@ -19,8 +19,8 @@ public class App implements Runnable {
     @Parameters(index = "1", description = "path to second File")
     private String filePath2;
 
-    @Option(names = {"-f", "--format"}, description = "Output format (default: stylish)")
-    private String format = "stylish";
+    @Option(names = {"-f", "--format"}, description = "Output format (default: stylish)", defaultValue = "stylish")
+    private String format;
 
     public static void main(String[] args) {
         int exitCode = new CommandLine(new App()).execute(args);
