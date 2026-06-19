@@ -12,16 +12,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class PlainDifferTest {
-    static final String expected1 = "expected_plain1";
-    static final String expected2 = "expected_plain2";
-    static final String format = "plain";
+    static final String EXPECTED_1 = "expected_plain1";
+    static final String EXPECTED_2 = "expected_plain2";
+    static final String FORMAT = "plain";
     static String result1;
     static String result2;
 
     @BeforeAll
     static void beforeAll() throws IOException {
-        result1 =  readFixture(expected1);
-        result2 =  readFixture(expected2);
+        result1 =  readFixture(EXPECTED_1);
+        result2 =  readFixture(EXPECTED_2);
     }
 
     private static Path getFixturePath(String fileName) {
@@ -35,11 +35,11 @@ public class PlainDifferTest {
 
     @Test
     void testPlainDiffer() throws Exception {
-        assertEquals(result1, Differ.generate("file1.json", "file2.json", format));
-        assertEquals(result1, Differ.generate("file1.json", "file2.yaml", format));
-        assertEquals(result1, Differ.generate("file1.yml", "file2.json", format));
-        assertEquals(result1, Differ.generate("file1.yml", "file2.yaml", format));
+        assertEquals(result1, Differ.generate("file1.json", "file2.json", FORMAT));
+        assertEquals(result1, Differ.generate("file1.json", "file2.yaml", FORMAT));
+        assertEquals(result1, Differ.generate("file1.yml", "file2.json", FORMAT));
+        assertEquals(result1, Differ.generate("file1.yml", "file2.yaml", FORMAT));
 
-        assertEquals(result2, Differ.generate("file3.json", "file4.json", format));
+        assertEquals(result2, Differ.generate("file3.json", "file4.json", FORMAT));
     }
 }
