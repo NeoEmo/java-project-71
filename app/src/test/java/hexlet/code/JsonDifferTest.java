@@ -1,129 +1,44 @@
 package hexlet.code;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JsonDifferTest {
+    static final String expected1 = "expected_json1";
+    static final String expected2 = "expected_json2";
+    static final String format = "json";
+    static String result1;
+    static String result2;
 
-    @Test
-    public void testJsonDiffer2() throws Exception {
-        var format = "json";
-        var result = """
-                    [ {
-                      "key" : "follow",
-                      "type" : "removed",
-                      "oldValue" : false,
-                      "newValue" : null
-                    }, {
-                      "key" : "host",
-                      "type" : "unchanged",
-                      "oldValue" : "hexlet.io",
-                      "newValue" : "hexlet.io"
-                    }, {
-                      "key" : "proxy",
-                      "type" : "removed",
-                      "oldValue" : "123.234.53.22",
-                      "newValue" : null
-                    }, {
-                      "key" : "timeout",
-                      "type" : "changed",
-                      "oldValue" : 50,
-                      "newValue" : 20
-                    }, {
-                      "key" : "verbose",
-                      "type" : "added",
-                      "oldValue" : null,
-                      "newValue" : true
-                    } ]""";
+    @BeforeAll
+    static void beforeAll() throws IOException {
+        result1 =  readFixture(expected1);
+        result2 =  readFixture(expected2);
+    }
 
-        assertEquals(result, Differ.generate("file1.json", "file2.json", format).replace("\r\n", "\n"));
-        System.out.println(Differ.generate("file3.json", "file4.json", format));
+    private static Path getFixturePath(String fileName) {
+        return Paths.get("src", "test", "resources", "fixtures", fileName).toAbsolutePath().normalize();
+    }
+
+    private static String readFixture(String fileName) throws IOException {
+        var path = getFixturePath(fileName);
+        return Files.readString(path).trim().replace("\r\n", "\n");
     }
 
     @Test
-    public void testJsonDiffer3() throws Exception {
-        var format = "json";
-        var result = """
-                    [ {
-                      "key" : "chars1",
-                      "type" : "unchanged",
-                      "oldValue" : [ "a", "b", "c" ],
-                      "newValue" : [ "a", "b", "c" ]
-                    }, {
-                      "key" : "chars2",
-                      "type" : "changed",
-                      "oldValue" : [ "d", "e", "f" ],
-                      "newValue" : false
-                    }, {
-                      "key" : "checked",
-                      "type" : "changed",
-                      "oldValue" : false,
-                      "newValue" : true
-                    }, {
-                      "key" : "default",
-                      "type" : "changed",
-                      "oldValue" : null,
-                      "newValue" : [ "value1", "value2" ]
-                    }, {
-                      "key" : "id",
-                      "type" : "changed",
-                      "oldValue" : 45,
-                      "newValue" : null
-                    }, {
-                      "key" : "key1",
-                      "type" : "removed",
-                      "oldValue" : "value1",
-                      "newValue" : null
-                    }, {
-                      "key" : "key2",
-                      "type" : "added",
-                      "oldValue" : null,
-                      "newValue" : "value2"
-                    }, {
-                      "key" : "numbers1",
-                      "type" : "unchanged",
-                      "oldValue" : [ 1, 2, 3, 4 ],
-                      "newValue" : [ 1, 2, 3, 4 ]
-                    }, {
-                      "key" : "numbers2",
-                      "type" : "changed",
-                      "oldValue" : [ 2, 3, 4, 5 ],
-                      "newValue" : [ 22, 33, 44, 55 ]
-                    }, {
-                      "key" : "numbers3",
-                      "type" : "removed",
-                      "oldValue" : [ 3, 4, 5 ],
-                      "newValue" : null
-                    }, {
-                      "key" : "numbers4",
-                      "type" : "added",
-                      "oldValue" : null,
-                      "newValue" : [ 4, 5, 6 ]
-                    }, {
-                      "key" : "obj1",
-                      "type" : "added",
-                      "oldValue" : null,
-                      "newValue" : {
-                        "nestedKey" : "value",
-                        "isNested" : true
-                      }
-                    }, {
-                      "key" : "setting1",
-                      "type" : "changed",
-                      "oldValue" : "Some value",
-                      "newValue" : "Another value"
-                    }, {
-                      "key" : "setting2",
-                      "type" : "changed",
-                      "oldValue" : 200,
-                      "newValue" : 300
-                    }, {
-                      "key" : "setting3",
-                      "type" : "changed",
-                      "oldValue" : true,
-                      "newValue" : "none"
-                    } ]""";
+    void testJsonDiffer() throws Exception {
+        assertEquals(result1, Differ.generate("file1.json", "file2.json", format));
+        assertEquals(result1, Differ.generate("file1.json", "file2.yaml", format));
+        assertEquals(result1, Differ.generate("file1.yml", "file2.json", format));
+        assertEquals(result1, Differ.generate("file1.yml", "file2.yaml", format));
 
-        assertEquals(result, Differ.generate("file3.json", "file4.json", format).replace("\r\n", "\n"));
+        assertEquals(result2, Differ.generate("file3.json", "file4.json", format));
     }
 }
