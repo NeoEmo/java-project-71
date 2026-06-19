@@ -14,16 +14,16 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class StylishDifferTest {
-    static final String expected1 = "expected_stylish1";
-    static final String expected2 = "expected_stylish2";
-    static final String format = "stylish";
+    static final String EXPECTED_1 = "expected_stylish1";
+    static final String EXPECTED_2 = "expected_stylish2";
+    static final String FORMAT = "stylish";
     static String result1;
     static String result2;
 
     @BeforeAll
     static void beforeAll() throws IOException {
-        result1 =  readFixture(expected1);
-        result2 =  readFixture(expected2);
+        result1 =  readFixture(EXPECTED_1);
+        result2 =  readFixture(EXPECTED_2);
     }
 
     private static Path getFixturePath(String fileName) {
@@ -37,19 +37,19 @@ public class StylishDifferTest {
 
     @Test
     void testStylishDiffer() throws Exception {
-        assertEquals(result1, Differ.generate("file1.json", "file2.json", format));
-        assertEquals(result1, Differ.generate("file1.json", "file2.yaml", format));
-        assertEquals(result1, Differ.generate("file1.yml", "file2.json", format));
-        assertEquals(result1, Differ.generate("file1.yml", "file2.yaml", format));
+        assertEquals(result1, Differ.generate("file1.json", "file2.json", FORMAT));
+        assertEquals(result1, Differ.generate("file1.json", "file2.yaml", FORMAT));
+        assertEquals(result1, Differ.generate("file1.yml", "file2.json", FORMAT));
+        assertEquals(result1, Differ.generate("file1.yml", "file2.yaml", FORMAT));
 
-        assertEquals(result2, Differ.generate("file3.json", "file4.json", format));
+        assertEquals(result2, Differ.generate("file3.json", "file4.json", FORMAT));
     }
 
 
     @Test
     public void testStylishDiffer2() {
         Exception exception = assertThrows(FileNotFoundException.class, () -> {
-            Differ.generate("file1.json", "file10.json", format);
+            Differ.generate("file1.json", "file10.json", FORMAT);
         });
         String expectedStart = "Файл file10.json не найден в следующих местах:";
         assertTrue(exception.getMessage().startsWith(expectedStart));
