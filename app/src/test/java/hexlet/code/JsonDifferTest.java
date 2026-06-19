@@ -9,16 +9,32 @@ public class JsonDifferTest {
     public void testJsonDiffer2() throws Exception {
         var format = "json";
         var result = """
-                {
-                  "follow" : false,
-                  "host" : "hexlet.io",
-                  "proxy" : "123.234.53.22",
-                  "timeout" : {
-                    "old" : 50,
-                    "new" : 20
-                  },
-                  "verbose" : true
-                }""";
+                    [ {
+                      "key" : "follow",
+                      "type" : "removed",
+                      "oldValue" : false,
+                      "newValue" : null
+                    }, {
+                      "key" : "host",
+                      "type" : "unchanged",
+                      "oldValue" : "hexlet.io",
+                      "newValue" : "hexlet.io"
+                    }, {
+                      "key" : "proxy",
+                      "type" : "removed",
+                      "oldValue" : "123.234.53.22",
+                      "newValue" : null
+                    }, {
+                      "key" : "timeout",
+                      "type" : "changed",
+                      "oldValue" : 50,
+                      "newValue" : 20
+                    }, {
+                      "key" : "verbose",
+                      "type" : "added",
+                      "oldValue" : null,
+                      "newValue" : true
+                    } ]""";
 
         assertEquals(result, Differ.generate("file1.json", "file2.json", format).replace("\r\n", "\n"));
         System.out.println(Differ.generate("file3.json", "file4.json", format));
@@ -28,50 +44,85 @@ public class JsonDifferTest {
     public void testJsonDiffer3() throws Exception {
         var format = "json";
         var result = """
-                {
-                  "chars1" : [ "a", "b", "c" ],
-                  "chars2" : {
-                    "old" : [ "d", "e", "f" ],
-                    "new" : false
-                  },
-                  "checked" : {
-                    "old" : false,
-                    "new" : true
-                  },
-                  "default" : {
-                    "old" : null,
-                    "new" : [ "value1", "value2" ]
-                  },
-                  "id" : {
-                    "old" : 45,
-                    "new" : null
-                  },
-                  "key1" : "value1",
-                  "key2" : "value2",
-                  "numbers1" : [ 1, 2, 3, 4 ],
-                  "numbers2" : {
-                    "old" : [ 2, 3, 4, 5 ],
-                    "new" : [ 22, 33, 44, 55 ]
-                  },
-                  "numbers3" : [ 3, 4, 5 ],
-                  "numbers4" : [ 4, 5, 6 ],
-                  "obj1" : {
-                    "nestedKey" : "value",
-                    "isNested" : true
-                  },
-                  "setting1" : {
-                    "old" : "Some value",
-                    "new" : "Another value"
-                  },
-                  "setting2" : {
-                    "old" : 200,
-                    "new" : 300
-                  },
-                  "setting3" : {
-                    "old" : true,
-                    "new" : "none"
-                  }
-                }""";
+                    [ {
+                      "key" : "chars1",
+                      "type" : "unchanged",
+                      "oldValue" : [ "a", "b", "c" ],
+                      "newValue" : [ "a", "b", "c" ]
+                    }, {
+                      "key" : "chars2",
+                      "type" : "changed",
+                      "oldValue" : [ "d", "e", "f" ],
+                      "newValue" : false
+                    }, {
+                      "key" : "checked",
+                      "type" : "changed",
+                      "oldValue" : false,
+                      "newValue" : true
+                    }, {
+                      "key" : "default",
+                      "type" : "changed",
+                      "oldValue" : null,
+                      "newValue" : [ "value1", "value2" ]
+                    }, {
+                      "key" : "id",
+                      "type" : "changed",
+                      "oldValue" : 45,
+                      "newValue" : null
+                    }, {
+                      "key" : "key1",
+                      "type" : "removed",
+                      "oldValue" : "value1",
+                      "newValue" : null
+                    }, {
+                      "key" : "key2",
+                      "type" : "added",
+                      "oldValue" : null,
+                      "newValue" : "value2"
+                    }, {
+                      "key" : "numbers1",
+                      "type" : "unchanged",
+                      "oldValue" : [ 1, 2, 3, 4 ],
+                      "newValue" : [ 1, 2, 3, 4 ]
+                    }, {
+                      "key" : "numbers2",
+                      "type" : "changed",
+                      "oldValue" : [ 2, 3, 4, 5 ],
+                      "newValue" : [ 22, 33, 44, 55 ]
+                    }, {
+                      "key" : "numbers3",
+                      "type" : "removed",
+                      "oldValue" : [ 3, 4, 5 ],
+                      "newValue" : null
+                    }, {
+                      "key" : "numbers4",
+                      "type" : "added",
+                      "oldValue" : null,
+                      "newValue" : [ 4, 5, 6 ]
+                    }, {
+                      "key" : "obj1",
+                      "type" : "added",
+                      "oldValue" : null,
+                      "newValue" : {
+                        "nestedKey" : "value",
+                        "isNested" : true
+                      }
+                    }, {
+                      "key" : "setting1",
+                      "type" : "changed",
+                      "oldValue" : "Some value",
+                      "newValue" : "Another value"
+                    }, {
+                      "key" : "setting2",
+                      "type" : "changed",
+                      "oldValue" : 200,
+                      "newValue" : 300
+                    }, {
+                      "key" : "setting3",
+                      "type" : "changed",
+                      "oldValue" : true,
+                      "newValue" : "none"
+                    } ]""";
 
         assertEquals(result, Differ.generate("file3.json", "file4.json", format).replace("\r\n", "\n"));
     }
