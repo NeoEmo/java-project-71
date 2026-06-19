@@ -1,36 +1,53 @@
 package hexlet.code;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class StylishDifferTest {
+    static final String expected1 = "expected_stylish1";
+    static final String expected2 = "expected_stylish2";
+    static final String format = "stylish";
+    static String result1;
+    static String result2;
 
-    @Test
-    public void testDiffer() throws Exception {
-        var format = "stylish";
-        var result = """
-                {
-                  - follow: false
-                    host: hexlet.io
-                  - proxy: 123.234.53.22
-                  - timeout: 50
-                  + timeout: 20
-                  + verbose: true
-                }""";
-        assertEquals(result, Differ.generate("file1.json", "file2.json", format));
-        assertEquals(result, Differ.generate("file1.json", "file2.json"));
+    @BeforeAll
+    static void beforeAll() throws IOException {
+        result1 =  readFixture(expected1);
+        result2 =  readFixture(expected2);
+    }
+
+    private static Path getFixturePath(String fileName) {
+        return Paths.get("src", "test", "resources", "fixtures", fileName).toAbsolutePath().normalize();
+    }
+
+    private static String readFixture(String fileName) throws IOException {
+        var path = getFixturePath(fileName);
+        return Files.readString(path).trim().replace("\r\n", "\n");
     }
 
     @Test
-    public void testDiffer2() {
-        var format = "stylish";
+    void testStylishDiffer() throws Exception {
+        assertEquals(result1, Differ.generate("file1.json", "file2.json", format));
+        assertEquals(result1, Differ.generate("file1.json", "file2.yaml", format));
+        assertEquals(result1, Differ.generate("file1.yml", "file2.json", format));
+        assertEquals(result1, Differ.generate("file1.yml", "file2.yaml", format));
+
+        assertEquals(result2, Differ.generate("file3.json", "file4.json", format));
+    }
+
+
+    @Test
+    public void testStylishDiffer2() {
         Exception exception = assertThrows(FileNotFoundException.class, () -> {
             Differ.generate("file1.json", "file10.json", format);
         });
@@ -39,76 +56,12 @@ public class StylishDifferTest {
     }
 
     @Test
-    public void testDiffer3() throws Exception {
-        var json1 = """
-            {
-            "a":1,
-            "b":2,
-            "c":3,
-            "d":4,
-            "e":5
-            }""";
-        var json2 = """
-            {
-            "a":3,
-            "c":3,
-            "d":2,
-            "e":6
-            }""";
-        var result = """
-            {
-              - a: 1
-              + a: 3
-              - b: 2
-                c: 3
-              - d: 4
-              + d: 2
-              - e: 5
-              + e: 6
-            }""";
+    public void testDefaultDiffer() throws Exception {
+        assertEquals(result1, Differ.generate("file1.json", "file2.json"));
+        assertEquals(result1, Differ.generate("file1.json", "file2.yaml"));
+        assertEquals(result1, Differ.generate("file1.yml", "file2.json"));
+        assertEquals(result1, Differ.generate("file1.yml", "file2.yaml"));
 
-        Path tempFile1 = Files.createTempFile("test1", ".json");
-        Path tempFile2 = Files.createTempFile("test2", ".json");
-        try {
-            Files.writeString(tempFile1, json1);
-            Files.writeString(tempFile2, json2);
-            String diff = Differ.generate(tempFile1.toString(), tempFile2.toString(), "stylish");
-            assertEquals(result, diff);
-        } finally {
-            Files.deleteIfExists(tempFile1);
-            Files.deleteIfExists(tempFile2);
-        }
-    }
-
-    @Test
-    public void testDiffer4() throws Exception {
-        var format = "stylish";
-        var result = """
-                {
-                    chars1: [a, b, c]
-                  - chars2: [d, e, f]
-                  + chars2: false
-                  - checked: false
-                  + checked: true
-                  - default: null
-                  + default: [value1, value2]
-                  - id: 45
-                  + id: null
-                  - key1: value1
-                  + key2: value2
-                    numbers1: [1, 2, 3, 4]
-                  - numbers2: [2, 3, 4, 5]
-                  + numbers2: [22, 33, 44, 55]
-                  - numbers3: [3, 4, 5]
-                  + numbers4: [4, 5, 6]
-                  + obj1: {nestedKey=value, isNested=true}
-                  - setting1: Some value
-                  + setting1: Another value
-                  - setting2: 200
-                  + setting2: 300
-                  - setting3: true
-                  + setting3: none
-                }""";
-        assertEquals(result, Differ.generate("file3.json", "file4.json", format));
+        assertEquals(result2, Differ.generate("file3.json", "file4.json"));
     }
 }
