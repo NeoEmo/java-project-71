@@ -1,41 +1,45 @@
 package hexlet.code;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class PlainDifferTest {
+    static final String expected1 = "expected_plain1";
+    static final String expected2 = "expected_plain2";
+    static final String format = "plain";
+    static String result1;
+    static String result2;
 
-    @Test
-    public void testPlainDiffer() throws Exception {
-        var format = "plain";
-        var result = """
-                Property 'follow' was removed
-                Property 'proxy' was removed
-                Property 'timeout' was updated. From 50 to 20
-                Property 'verbose' was added with value: true""";
+    @BeforeAll
+    static void beforeAll() throws IOException {
+        result1 =  readFixture(expected1);
+        result2 =  readFixture(expected2);
+    }
 
-        assertEquals(result, Differ.generate("file1.json", "file2.json", format));
+    private static Path getFixturePath(String fileName) {
+        return Paths.get("src", "test", "resources", "fixtures", fileName).toAbsolutePath().normalize();
+    }
+
+    private static String readFixture(String fileName) throws IOException {
+        var path = getFixturePath(fileName);
+        return Files.readString(path).trim().replace("\r\n", "\n");
     }
 
     @Test
-    public void testPlainDiffer2() throws Exception {
-        var format = "plain";
-        var result = """
-                Property 'chars2' was updated. From [complex value] to false
-                Property 'checked' was updated. From false to true
-                Property 'default' was updated. From null to [complex value]
-                Property 'id' was updated. From 45 to null
-                Property 'key1' was removed
-                Property 'key2' was added with value: 'value2'
-                Property 'numbers2' was updated. From [complex value] to [complex value]
-                Property 'numbers3' was removed
-                Property 'numbers4' was added with value: [complex value]
-                Property 'obj1' was added with value: [complex value]
-                Property 'setting1' was updated. From 'Some value' to 'Another value'
-                Property 'setting2' was updated. From 200 to 300
-                Property 'setting3' was updated. From true to 'none'""";
+    void testPlainDiffer() throws Exception {
+        assertEquals(result1, Differ.generate("file1.json", "file2.json", format));
+        assertEquals(result1, Differ.generate("file1.json", "file2.yaml", format));
+        assertEquals(result1, Differ.generate("file1.yml", "file2.json", format));
+        assertEquals(result1, Differ.generate("file1.yml", "file2.yaml", format));
 
-        assertEquals(result, Differ.generate("file3.json", "file4.json", format));
+        assertEquals(result2, Differ.generate("file3.json", "file4.json", format));
     }
 }
