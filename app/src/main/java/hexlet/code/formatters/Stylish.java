@@ -1,27 +1,29 @@
 package hexlet.code.formatters;
 
+import static hexlet.code.DiffBuilder.DiffFormat;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Stylish implements Formatter {
     @Override
-    public String format(Map<String, Object> map1, Map<String, Object> map2) throws Exception {
-        List<DiffFormat> diffLines = Formatter.formatDifference(map1, map2);
+    public String format(List<DiffFormat> diffLines) throws Exception {
         List<String> lines = new ArrayList<>();
-        for (DiffFormat format : diffLines) {
-            switch (format.type()) {
-                case REMOVED -> lines.add("  - " + format.key() + ": " + format.oldValue());
-                case ADDED -> lines.add("  + " + format.key() + ": " + format.newValue());
-                case UNCHANGED -> lines.add("    " + format.key() + ": " + format.oldValue());
+        for (DiffFormat diffFormat : diffLines) {
+            String removed = "  - " + diffFormat.key() + ": " + diffFormat.oldValue();
+            String added = "  + " + diffFormat.key() + ": " + diffFormat.newValue();
+            switch (diffFormat.type()) {
+                case REMOVED -> lines.add(removed);
+                case ADDED -> lines.add(added);
+                case UNCHANGED -> lines.add("    " +  diffFormat.key() + ": " + diffFormat.oldValue());
                 case CHANGED -> {
-                    lines.add("  - " + format.key() + ": " + format.oldValue());
-                    lines.add("  + " + format.key() + ": " + format.newValue());
+                    lines.add(removed);
+                    lines.add(added);
                 }
-                default -> throw new Exception("Невозможно сравнить строчку! " + format.type() + ": " + format.key()
-                        + " " + format.oldValue());
+                default -> throw new Exception("Невозможно сравнить строчку! " + diffFormat.type() + ": "
+                        + diffFormat.key() + " " + diffFormat.oldValue());
             }
         }
-        return  "{\n" + String.join("\n", lines) + "\n}";
+        return "{\n" + String.join("\n", lines) + "\n}";
     }
 }
