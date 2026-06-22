@@ -7,7 +7,7 @@ import hexlet.code.formatters.Stylish;
 
 import java.util.List;
 
-public class ChooseFormatter {
+public class FormatterChoose {
     static String chooseFormat(String format, List<DiffBuilder.DiffFormat> diffLines) throws Exception {
         Formatter formatter = switch (format) {
             case "stylish" -> new Stylish();
