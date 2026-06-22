@@ -34,11 +34,11 @@ public class JsonDifferTest {
 
     @Test
     void testJsonDiffer() throws Exception {
-        assertEquals(result1, Differ.generate("file1.json", "file2.json", FORMAT).replace("\r\n", "\n"));
-        assertEquals(result1, Differ.generate("file1.json", "file2.yaml", FORMAT).replace("\r\n", "\n"));
-        assertEquals(result1, Differ.generate("file1.yml", "file2.json", FORMAT).replace("\r\n", "\n"));
-        assertEquals(result1, Differ.generate("file1.yml", "file2.yaml", FORMAT).replace("\r\n", "\n"));
+        assertEquals(result1, Differ.generate("file1.json", "file2.json", FORMAT));
+        assertEquals(result1, Differ.generate("file1.json", "file2.yaml", FORMAT));
+        assertEquals(result1, Differ.generate("file1.yml", "file2.json", FORMAT));
+        assertEquals(result1, Differ.generate("file1.yml", "file2.yaml", FORMAT));
 
-        assertEquals(result2, Differ.generate("file3.json", "file4.json", FORMAT).replace("\r\n", "\n"));
+        assertEquals(result2, Differ.generate("file3.json", "file4.json", FORMAT));
     }
 }
