@@ -30,7 +30,7 @@ public class PlainDifferTest {
 
     private static String readFixture(String fileName) throws IOException {
         var path = getFixturePath(fileName);
-        return Files.readString(path).trim().replace("\r\n", "\n");
+        return Files.readString(path).trim();
     }
 
     @Test
