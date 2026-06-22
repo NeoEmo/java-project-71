@@ -10,6 +10,6 @@ public class Json implements Formatter {
     @Override
     public String format(List<DiffFormat> diffLines) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(diffLines);
+        return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(diffLines).replace("\r\n", "\n");
     }
 }
